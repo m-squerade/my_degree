@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-nz">
+<head>
+<meta charset="utf-8" />
+<title>My Degree</title>
+<script src="jquery-3.4.1.min.js"></script>
+<style type="text/css">
+  body {background-color: #0F0F0F; font-family: sans-serif; padding: 0; margin: 1em; color: #EFEFEF}
+  h1 {clear: both; color: hsl(12, 100%, 40%); text-align: center}
+  h2 {clear: both; color: hsl(12, 100%, 50%); margin-top: 1em; padding-top: 1em; text-align: left}
+  h3 {clear: both; color: hsl(12, 100%, 40%); font-size: 120%; font-weight: normal; margin-bottom: 0}
+  table {background-color: #000000; border-collapse: collapse; width: 100%}
+  table.half {clear: both; width: 50%}
+  td, th {border: 1px solid #3F3F3F; padding: 0.25em 0.5em}
+  th {background-clip: padding-box; background-color: #1F1F1F; text-align: center; vertical-align: middle}
+  td {text-align: left; vertical-align: top}
+  .yes {color: #3FFF3F}
+  .no {color: #FF3F3F
+}
+</style>
+<script type="text/ecmascript">
+let aggregates = {};
+
+function append_value(key, value) {
+  if (aggregates.hasOwnProperty(key)) {
+    aggregates[key] += value;
+  } else {
+    aggregates[key] = value;
+  }
+}
+
+function process_aggregate(faculty, paper, points) {
+  append_value(faculty, points);
+  let pp = paper; // e.g. 'DSDN101'
+  append_value(pp, points);
+  pp = pp.substr(0, 5); // e.g. 'DSDN1'
+  append_value(pp, points);
+  let zz = 'Z' + pp.substr(4); // paper level, e.g. '1'
+  append_value(zz, points); // e.g. 'Z1'
+  append_value('ZZ', points);
+  append_value(faculty + ' ' + zz, points); // e.g. '01 Design Z1'
+  pp = pp.substr(0, 4); // e.g. 'DSDN'
+  append_value(pp, points);
+}
+
+function process_prereqs(prereqs) {
+  if (prereqs) { // COMD201;Z2=60
+    let prs = prereqs.split(';'); // 'COMD201', 'Z2=60'
+    let kv = '';
+    let has_all = true;
+    for (let ii = 0; ii < prs.length; ii++) {
+      if (prs[ii]) {
+        if (!aggregates[prs[ii]]) { // 'Z2=60'
+          kv = prs[ii].split('='); // 'Z2', '60'
+          if (aggregates[kv[0]]) {
+            if (aggregates[kv[0]] < parseInt(kv[1])) { // accumulated points < prerequisite total
+              has_all = false;
+            }
+          } else {
+            has_all = false;
+          }
+        }
+      }
+    }
+    if (has_all) {
+      return '<span class="yes">' + prereqs + ' ✓</span>';
+    } else {
+      return '<span class="no">' + prereqs + ' ✖</span>';
+    }
+  } else {
+    return '-';
+  }
+}
+
+function process_paper(json) {
+  this.append('<tr><td>' + json.faculty + '</td><td>' + json.paper + '</td><td class="hc">' + json.points + '</td><td>' + process_prereqs(json.prereqs) + '</td></tr>');
+  process_aggregate(json.faculty, json.paper, json.points);
+}
+
+function process_trimester(json, year) {
+  $('#output').append('<h3>TRIMESTER: ' + json.trimester + '</h3>');
+  let tbody = 't' + json.trimester;
+  $('#output').append('<table><col width="25%" /><col width="25%" /><col width="25%" /><col width="25%" /><thead><tr><th>Faculty</th><th>Paper</th><th>Points</th><th>Prerequisite(s)</th></tr></thead><tbody id="' + tbody + '"></tbody></table>');
+  json.papers.forEach(process_paper, $('#' + tbody));
+}
+
+function process_year(json) {
+  $('#output').append('<h2>YEAR: ' + json.year + '</h2>');
+  json.trimesters.forEach(process_trimester);
+  $('#output').append('<h3>AGGREGATES TO DATE</h3>');
+
+  let tbody = 'a' + json.year;
+  $('#output').append('<table class="half"><col width="50%" /><col width="50%" /><tbody id="' + tbody + '"></tbody></table>');
+  const ordered = Object.keys(aggregates).sort().reduce((obj, key) => {obj[key] = aggregates[key]; return obj;}, {}); // sort aggregates by key
+  let mm = /[A-Z]{4}[0-9]{3}/; // e.g. 'DSDN101'
+  let kk = '';
+  for (const [key, value] of Object.entries(ordered)) {
+    if (!mm.test(key)) { // ignore specific papers, e.g. 'DSDN101'
+      kk = key.replace('Z1', 'Level 1 (Z1)').replace('Z2', 'Level 2 (Z2)').replace('Z3', 'Level 3 (Z3)').replace('ZZ', 'All Levels (ZZ)');
+      $('#' + tbody).append('<tr><td>' + kk + '</td><td class="hc">' + value + '</td></tr>');
+    }
+  }
+}
+</script>
+</head>
+<body>
+<h1>My Degree</h1>
+
+<p>As of 2023:<br />90 level 1 points (BDI / 60 + Other / 30)<br /> + 195 level 2 points (BDI / 120 + Other / 75)<br /> + 75 level 3 points (BDI / 60 + Other / 15)<br /> = 360 total points (BDI / 240 + Other / 120).</p>
+
+<div id="output"></div>
+<script type="text/ecmascript">
+  $.getJSON('my_degree.json', function(json) {
+    json.years.forEach(process_year);
+  });
+</script>
+
+<p>As of 2023:<br />90 level 1 points (BDI / 60 + Other / 30)<br /> + 195 level 2 points (BDI / 120 + Other / 75)<br /> + 75 level 3 points (BDI / 60 + Other / 15)<br /> = 360 total points (BDI / 240 + Other / 120).</p>
+
+</body>
+</html>

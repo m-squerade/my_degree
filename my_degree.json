@@ -1,0 +1,190 @@
+{
+  "years": [
+    {
+      "year": 2023,
+      "trimesters": [
+        {
+          "trimester": "2023-1",
+          "papers": [
+            {
+              "faculty": "03 Biology",
+              "paper": "BIOL113",
+              "prereqs": "",
+              "points": 15
+            },
+            {
+              "faculty": "02 Humanities",
+              "paper": "CLAS111",
+              "prereqs": "",
+              "points": 20
+            },
+            {
+              "faculty": "01 Design",
+              "paper": "DSDN151",
+              "prereqs": "",
+              "points": 15
+            },
+            {
+              "faculty": "01 Design",
+              "paper": "DSDN171",
+              "prereqs": "",
+              "points": 15
+            }
+          ]
+        },
+        {
+          "trimester": "2023-2",
+          "papers": [
+            {
+              "faculty": "03 Biology",
+              "paper": "BIOL111",
+              "prereqs": "",
+              "points": 15
+            },
+            {
+              "faculty": "03 Biology",
+              "paper": "BMSC117",
+              "prereqs": "",
+              "points": 15
+            },
+            {
+              "faculty": "01 Design",
+              "paper": "DSDN103",
+              "prereqs": "",
+              "points": 15
+            },
+            {
+              "faculty": "04 Psychology",
+              "paper": "PSYC122",
+              "prereqs": "",
+              "points": 15
+            }
+          ]
+        },
+        {
+          "trimester": "2023-3",
+          "papers": [
+            {
+              "faculty": "01 Design",
+              "paper": "DSDN142",
+              "prereqs": "",
+              "points": 15
+            },
+            {
+              "faculty": "01 Design",
+              "paper": "DSDN173",
+              "prereqs": "",
+              "points": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "trimesters": [
+        {
+          "trimester": "2024-1",
+          "papers": [
+            {
+              "faculty": "01 Design",
+              "paper": "COMD201",
+              "prereqs": "",
+              "points": 15
+            },
+            {
+              "faculty": "01 Design",
+              "paper": "COMD241",
+              "prereqs": "01 Design=45;ZZ=75",
+              "points": 15
+            },
+            {
+              "faculty": "01 Design",
+              "paper": "COMD251",
+              "prereqs": "01 Design=30;ZZ=75",
+              "points": 15
+            },
+            {
+              "faculty": "01 Design",
+              "paper": "DSDN271",
+              "prereqs": "DSDN171;ZZ=75",
+              "points": 15
+            }
+          ]
+        },
+        {
+          "trimester": "2024-2",
+          "papers": [
+            {
+              "faculty": "01 Design",
+              "paper": "IXXN211",
+              "prereqs": "01 Design=30;ZZ=75",
+              "points": 15
+            },
+            {
+              "faculty": "02 Humanities",
+              "paper": "WRIT203",
+              "prereqs": "ZZ=65",
+              "points": 20
+            },
+            {
+              "faculty": "02 Humanities",
+              "paper": "PHIL265",
+              "prereqs": "PSYC=15",
+              "points": 20
+            },
+            {
+              "faculty": "02 Humanities",
+              "paper": "CLAS205",
+              "prereqs": "ZZ=40",
+              "points": 20
+            }
+          ]
+        },
+        {
+          "trimester": "2024-3",
+          "papers": [
+            {
+              "faculty": "01 Design",
+              "paper": "IXXN221",
+              "prereqs": "01 Design=30;ZZ=75",
+              "points": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "trimesters": [
+        {
+          "trimester": "2025-1",
+          "papers": [{
+            "faculty": "01 Design",
+            "paper": "COMD302",
+            "prereqs": "COMD201;Z2=60", 
+            "points": 15
+          },{
+            "faculty": "01 Design",
+            "paper": "COMD351",
+            "prereqs": "01 Design=30;Z2=60", 
+            "points": 15
+          }]
+        },
+        {
+          "trimester": "2025-2",
+          "papers": [{
+            "faculty": "01 Design",
+            "paper": "COMD390",
+            "prereqs": "COMD201;DSDN371", 
+            "points": 30
+          }]
+        },
+        {
+          "trimester": "2025-3",
+          "papers": []
+        }
+      ]
+    }
+  ]
+}
